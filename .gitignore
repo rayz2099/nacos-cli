@@ -1,4 +1,6 @@
 nacos-cli
+cache/
+log/
 /bin/
 *.log
 *.tmp
