@@ -12,7 +12,8 @@
       "Bash(nacos-cli __complete:*)",
       "Bash(nacos-cli:*)",
       "Bash(go run:*)",
-      "Bash(gh pr:*)"
+      "Bash(gh pr:*)",
+      "Bash(gh run:*)"
     ]
   }
 }

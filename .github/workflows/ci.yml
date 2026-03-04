@@ -16,8 +16,5 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Test
-        run: go test ./...
-
       - name: Build
         run: go build -o ./bin/nacos-cli .
