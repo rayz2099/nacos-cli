@@ -1,0 +1,8 @@
+nacos-cli
+*.log
+*.tmp
+*.env
+.idea
+
+
+
