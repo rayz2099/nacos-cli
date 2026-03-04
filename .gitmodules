@@ -1,0 +1,4 @@
+[submodule "nacos-sdk-go"]
+	path = nacos-sdk-go
+	url = git@github.com:nacos-group/nacos-sdk-go.git
+	branch = v2.3.5

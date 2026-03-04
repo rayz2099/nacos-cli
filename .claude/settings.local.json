@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git ls-tree:*)",
+      "Bash(git:*)",
+      "Bash(go test:*)",
+      "Bash(go build:*)",
+      "Bash(go mod:*)",
+      "Bash(gofmt:*)",
+      "Bash(./bin/nacos-cli:*)",
+      "Bash(/opt/homebrew/bin/fish:*)",
+      "Bash(nacos-cli __complete:*)",
+      "Bash(nacos-cli:*)",
+      "Bash(go run:*)",
+      "Bash(gh pr:*)"
+    ]
+  }
+}

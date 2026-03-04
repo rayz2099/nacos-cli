@@ -1,4 +1,5 @@
 nacos-cli
+/bin/
 *.log
 *.tmp
 *.env

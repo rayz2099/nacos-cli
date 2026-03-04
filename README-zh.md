@@ -1,38 +1,38 @@
 # nacos-cli
 
-English | [中文](./README-zh.md)
+[English](./README.md) | 中文
 
-nacos-cli is a command-line tool for operating Nacos, covering common configuration management and service discovery workflows.
+nacos-cli 是一个用于在命令行中操作 Nacos 的工具，支持配置管理与服务发现常用操作。
 
-## Install
+## 安装
 
-### 1) Install with `go install`
+### 1) 使用 `go install`
 
 ```bash
 go install .
 ```
 
-After installation:
+安装后可直接使用：
 
 ```bash
 nacos-cli --help
 ```
 
-### 2) Build locally (via justfile)
+### 2) 本地构建（复用 justfile）
 
 ```bash
 just build
 ```
 
-Binary output:
+二进制文件输出到：
 
 ```bash
 ./bin/nacos-cli
 ```
 
-## Quick Start
+## 快速开始
 
-The examples below assume your Nacos server is reachable and required config is set.
+以下示例默认你已可访问 Nacos，并已完成必要配置。
 
 ```bash
 nacos-cli config list
@@ -41,19 +41,19 @@ nacos-cli config get dt-rpc
 nacos-cli naming instances --service demo-service
 ```
 
-Notes:
-- `group` defaults to `COMMON` in `config get [data-id] [group]`
-- `naming instances` requires `--service`
+说明：
+- `config get [data-id] [group]` 中 `group` 默认值为 `COMMON`
+- `naming instances` 需要通过 `--service` 指定服务名
 
-## Configuration
+## 配置
 
-Config file path:
+配置文件路径：
 
 ```text
 ~/.config/nacos-cli/config.json
 ```
 
-Supported fields:
+支持字段：
 
 - `nacos_server_addr`
 - `nacos_username`
@@ -62,7 +62,7 @@ Supported fields:
 - `namespaces`
 - `nacos_output`
 
-Example:
+示例：
 
 ```json
 {
@@ -75,13 +75,13 @@ Example:
 }
 ```
 
-Priority:
+配置优先级：
 
 ```text
 flags > env > file > default
 ```
 
-Environment variables (both lowercase and uppercase are supported):
+相关环境变量（支持小写与大写）：
 
 - `nacos_server_addr` / `NACOS_SERVER_ADDR`
 - `nacos_username` / `NACOS_USERNAME`
@@ -89,12 +89,12 @@ Environment variables (both lowercase and uppercase are supported):
 - `nacos_namespace` / `NACOS_NAMESPACE`
 - `nacos_output` / `NACOS_OUTPUT`
 
-## Output Modes
+## 输出模式
 
-- `text` (default)
+- `text`（默认）
 - `json`
 
-Set via global flag:
+可通过全局参数设置：
 
 ```bash
 nacos-cli -o json config list
@@ -102,10 +102,11 @@ nacos-cli -o json config list
 
 ## Fish Completion
 
-Enable fish completion:
+启用 fish completion：
 
 ```bash
 mkdir -p ~/.config/fish/completions
 nacos-cli completion fish > ~/.config/fish/completions/nacos-cli.fish
 ```
 
+重新打开 shell 后生效。
