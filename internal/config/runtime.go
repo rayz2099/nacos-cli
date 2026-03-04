@@ -23,6 +23,7 @@ type Runtime struct {
 	Password   string
 	Namespace  string
 	Output     string
+	Dev        bool
 }
 
 type fileConfig struct {
@@ -73,12 +74,18 @@ func ResolveFromCommand(cmd *cobra.Command) (Runtime, error) {
 		return Runtime{}, fmt.Errorf("server-addr is required")
 	}
 
+	dev, err := cmd.Flags().GetBool("dev")
+	if err != nil {
+		return Runtime{}, err
+	}
+
 	return Runtime{
 		ServerAddr: serverAddr,
 		Username:   username,
 		Password:   password,
 		Namespace:  namespace,
 		Output:     output,
+		Dev:        dev,
 	}, nil
 }
 

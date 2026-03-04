@@ -100,6 +100,19 @@ Set via global flag:
 nacos-cli -o json config list
 ```
 
+## Runtime Cache and Log
+
+- Cache directory: `~/.config/nacos-cli/cache`
+- Log is disabled by default
+- Enable dev mode with global flag `--dev`
+- In dev mode, log directory: `~/.config/nacos-cli/log` with `debug` level
+
+Example:
+
+```bash
+nacos-cli --dev config list
+```
+
 ## Fish Completion
 
 Enable fish completion:

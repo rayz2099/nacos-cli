@@ -28,6 +28,9 @@ func TestResolveFromCommand_Defaults(t *testing.T) {
 	if r.Output != DefaultOutput {
 		t.Fatalf("Output = %s", r.Output)
 	}
+	if r.Dev {
+		t.Fatalf("Dev = %v", r.Dev)
+	}
 }
 
 func TestResolveFromCommand_Env(t *testing.T) {
@@ -81,6 +84,23 @@ func TestResolveFromCommand_FlagOverridesEnv(t *testing.T) {
 	}
 	if r.Namespace != "flag-ns" {
 		t.Fatalf("Namespace = %s", r.Namespace)
+	}
+}
+
+func TestResolveFromCommand_DevFromFlag(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	cmd := testCommand()
+	if err := cmd.Flags().Set("dev", "true"); err != nil {
+		t.Fatalf("set dev: %v", err)
+	}
+
+	r, err := ResolveFromCommand(cmd)
+	if err != nil {
+		t.Fatalf("ResolveFromCommand() error = %v", err)
+	}
+	if !r.Dev {
+		t.Fatalf("Dev = %v", r.Dev)
 	}
 }
 
@@ -259,5 +279,6 @@ func testCommand() *cobra.Command {
 	cmd.Flags().String("password", "", "")
 	cmd.Flags().String("namespace", "", "")
 	cmd.Flags().String("output", "", "")
+	cmd.Flags().Bool("dev", false, "")
 	return cmd
 }

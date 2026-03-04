@@ -3,6 +3,8 @@ package client
 import (
 	"fmt"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -10,6 +12,7 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/v2/clients/config_client"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
+	nacoslogger "github.com/nacos-group/nacos-sdk-go/v2/common/logger"
 	"github.com/nacos-group/nacos-sdk-go/v2/model"
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
 	internalconfig "nacos-cli/internal/config"
@@ -62,13 +65,32 @@ func BuildClientParam(cfg internalconfig.Runtime) (vo.NacosClientParam, error) {
 		return vo.NacosClientParam{}, err
 	}
 
-	clientConfig := constant.NewClientConfig(
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return vo.NacosClientParam{}, err
+	}
+
+	baseDir := filepath.Join(homeDir, ".config", "nacos-cli")
+	cacheDir := filepath.Join(baseDir, "cache")
+	clientOptions := []constant.ClientOption{
 		constant.WithNamespaceId(cfg.Namespace),
 		constant.WithUsername(cfg.Username),
 		constant.WithPassword(cfg.Password),
 		constant.WithDisableUseSnapShot(true),
 		constant.WithNotLoadCacheAtStart(true),
-	)
+		constant.WithCacheDir(cacheDir),
+	}
+	if cfg.Dev {
+		clientOptions = append(clientOptions,
+			constant.WithLogDir(filepath.Join(baseDir, "log")),
+			constant.WithLogLevel("debug"),
+		)
+		nacoslogger.SetLogger(nil)
+	} else {
+		nacoslogger.SetLogger(noopLogger{})
+	}
+
+	clientConfig := constant.NewClientConfig(clientOptions...)
 
 	return vo.NacosClientParam{
 		ClientConfig:  clientConfig,
@@ -144,6 +166,26 @@ func parseAddress(addr string) (string, uint64, error) {
 
 	return host, port, nil
 }
+
+type noopLogger struct{}
+
+func (noopLogger) Info(...interface{}) {}
+
+func (noopLogger) Warn(...interface{}) {}
+
+func (noopLogger) Error(...interface{}) {}
+
+func (noopLogger) Debug(...interface{}) {}
+
+func (noopLogger) Infof(string, ...interface{}) {}
+
+func (noopLogger) Warnf(string, ...interface{}) {}
+
+func (noopLogger) Errorf(string, ...interface{}) {}
+
+func (noopLogger) Debugf(string, ...interface{}) {}
+
+func (noopLogger) Close() error { return nil }
 
 var _ config_client.IConfigClient
 var _ naming_client.INamingClient

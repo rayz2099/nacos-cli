@@ -20,6 +20,7 @@ func NewRootCommand() *cobra.Command {
 	cmd.PersistentFlags().String("password", "", "nacos password")
 	cmd.PersistentFlags().String("namespace", "", "nacos namespace")
 	cmd.PersistentFlags().StringP("output", "o", "", "output format: text|json")
+	cmd.PersistentFlags().Bool("dev", false, "enable dev mode")
 	_ = cmd.RegisterFlagCompletionFunc("namespace", completeNamespace)
 
 	cmd.AddCommand(newConfigCommand())

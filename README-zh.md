@@ -100,6 +100,19 @@ flags > env > file > default
 nacos-cli -o json config list
 ```
 
+## 运行时缓存与日志
+
+- 缓存目录：`~/.config/nacos-cli/cache`
+- 默认关闭日志
+- 通过全局参数 `--dev` 开启 dev mode
+- dev mode 下日志目录：`~/.config/nacos-cli/log`，日志级别为 `debug`
+
+示例：
+
+```bash
+nacos-cli --dev config list
+```
+
 ## Fish Completion
 
 启用 fish completion：
